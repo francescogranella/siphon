@@ -101,6 +101,13 @@ class WyomingUpperAir(HTTPEndPoint):
         df['longitude'] = longitude
         df['elevation'] = elevation
 
+        extra_parameters = ['showalter', 'lifted', 'LIFT', 'SWEAT', 'K', 'cross_totals', 'vertical_totals', 'totals_totals', 'CAPE', 'CAPE_virtual', 'convective_inhibition', 'CINS_virtual', 'bulk_richardson', 'temp_lifted_cond_layer', 'pres_lifted_cond_layer', 'mean_mixed_lpt', '1000_to_500_thickness', 'precip']
+        for i, param in enumerate(extra_parameters):
+            try:
+                df[param] = float(lines[7 + i].split(':')[1].strip())
+            except IndexError:
+                pass
+            
         # Add unit dictionary
         df.units = {'pressure': 'hPa',
                     'height': 'meter',
